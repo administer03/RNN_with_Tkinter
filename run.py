@@ -5,7 +5,7 @@ from keras.layers import Dense, LSTM, Dropout
 
 import matplotlib.pyplot as plt
 from tkinter import *
-import tkinter.messagebox
+from tkinter import messagebox
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import (FigureCanvasTkAgg,
 NavigationToolbar2Tk)
@@ -20,6 +20,8 @@ from pythainlp.util import thai_strftime
 # plotting the graph in
 # tkinter window
 def plot(day):
+	# messagebox.showinfo('waiting', 'กรุณารอสักครู่ ระบบกำลังประมวลผล')
+	# window.destroy()
 
 	# Create new window after click
 	# root = Tk()
@@ -70,11 +72,13 @@ def plot(day):
 	# adding the subplot
 	plot1 = fig.add_subplot(111)
 
+	
+
 	# plotting the graph
 	plot1.plot(x, y)
 	plot1.scatter(x, y, color='black')
 	plot1.grid(color = 'green', linestyle = '--', linewidth = 0.5)
-	# plot1.title("Predicion Result (Next x days from today)")
+	plot1.set_title("Next {} days prediction results".format(day))
 
 	# creating the Tkinter canvas
 	# containing the Matplotlib figure
@@ -89,14 +93,9 @@ def plot(day):
 	toolbar = NavigationToolbar2Tk(canvas,
 								root)
 	toolbar.update()
-
-	
 	# placing the toolbar on the Tkinter window
 	canvas.get_tk_widget().pack(side = BOTTOM, fill= BOTH, expand=True)
 
-def hide(x):
-	# x.pack_forget()
-	pass
 
 def tick():
     now = datetime.now()#.strftime('%Y-%m-%d %H:%M:%S')
@@ -106,13 +105,11 @@ def tick():
     clock.config(text=thai_strftime(now, fmt))
     clock.after(200, tick)
 
-def onClick():
-    tkinter.messagebox.showinfo("Welcome to GFG.",  "Hi I'm your message")
-
 # the main Tkinter window
 window = Tk()
 # window.columnconfigure(0, minsize=250)
 # window.rowconfigure([0, 1, 2], minsize=100)
+window.grid_columnconfigure((0, 1, 2), weight=1)
 
 # setting the title
 window.title('AI dealing with stock program')
@@ -129,7 +126,7 @@ tick() # it sill work if not send clock parameter
 
 ####################################### BUTTON ################################################
 plot_button = Button(master = window,
-					command=lambda: [plot(clicked.get()), hide(plot_button)],
+					command=lambda: [plot(clicked.get())],
 					height = 2,
 					width = 30,
 					text = "click เพื่อทำนาย",
@@ -157,15 +154,19 @@ lb = Label(window, text='เลือกจำนวนวันที่ต้�
 
 
 #  Grid
-# clock.grid(row=0, column=1, sticky="n")
-# plot_button.grid(row=1, column=1, sticky="n")
-# lb.grid(row=2, column=1, sticky="n")
+clock.grid(row=0, column=1, padx = 4, pady = 40)
+lb.grid(row=1, column=1)
+
+drop.config(width=15)
+drop["menu"].config(bg="#B8B8B8")
+drop.grid(row=2, column=1)
+
+plot_button.grid(row=3, column=1, padx = 4, pady = 40)
 
 # Pack
-clock.pack()
-lb.pack()
-drop.pack()
-plot_button.pack()
-
+# clock.pack()
+# lb.pack(side=tkinter.LEFT)
+# drop.pack(side=tkinter.LEFT)
+# plot_button.pack()
 
 window.mainloop()
