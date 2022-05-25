@@ -1,5 +1,4 @@
 # Recurrent_with_Tkinter
-this repository was created for studies about how to use machine learning (Keras & TensorFlow) cooperate Tkinter library.
 
 #######################################################################################################
                                                                                                                      
